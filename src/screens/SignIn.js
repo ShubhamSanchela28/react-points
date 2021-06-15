@@ -9,7 +9,30 @@ const SignIn = ({ history }) => {
 
     const { setAuthData } = useContext(authContext);
 
-    const onFormSubmit = e => {
+    const onFormSubmit = () => {
+        const e_mail = document.getElementById("email").value
+        const pass_word = document.getElementById("password").value
+
+        if (!e_mail || !pass_word) {
+            return alert("you need to fill up all the forms.");
+        }
+        let user_data = {
+            email: e_mail,
+            password: pass_word
+        }
+        let user_data_str = JSON.stringify(user_data);
+        let clientsArr = JSON.parse(localStorage.getItem('users')) || [];
+        const userExists = clientsArr.find(user => JSON.stringify(user) === user_data_str);
+        if (userExists) {
+            return alert("User already Exists");
+        }
+        clientsArr.push(user_data);
+        //save to localStorage
+        localStorage.setItem("users", JSON.stringify(clientsArr));
+        return alert("Account Created!");
+    }
+
+    const onFormSubmitt = e => {
         e.preventDefault();
         console.log(email);
         console.log(password);
@@ -30,6 +53,7 @@ const SignIn = ({ history }) => {
                         <Form.Label>Email address</Form.Label>
                         <Form.Control
                             type="email"
+                            id="email"
                             placeholder="Enter email"
                             onChange={e => {
                                 setEmail(e.target.value);
@@ -41,6 +65,7 @@ const SignIn = ({ history }) => {
                         <Form.Label>Password</Form.Label>
                         <Form.Control
                             type="password"
+                            id="password"
                             placeholder="Password"
                             onChange={e => {
                                 setPassword(e.target.value);

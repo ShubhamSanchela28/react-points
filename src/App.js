@@ -32,6 +32,8 @@ import { Switch, BrowserRouter, Route, Redirect } from 'react-router-dom';
 import SignIn from './screens/SignIn';
 import Panel from './screens/Panel';
 import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./PublicRoute";
+import Home from "./Home";
 
 function App() {
 
@@ -106,6 +108,14 @@ function App() {
           <PrivateRoute path="/" component={Panel} />
         </Switch>
     </BrowserRouter>
+      {/* <Login /> */}
+      {/* <BrowserRouter>
+        <Switch>
+          <PublicRoute restricted={false} component={Home} path="/" />
+          <PublicRoute restricted={true} component={SignIn} path="/login" exact />
+          <PrivateRoute component={Dashboard} path="/dashboard" exact />
+        </Switch>
+      </BrowserRouter> */}
     </div>
   );
 }
